@@ -2,6 +2,7 @@ package com.app.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +13,7 @@ import javax.persistence.OneToOne;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
 	
 	private String firstName;
@@ -23,21 +24,21 @@ public class User {
 	
 	private Integer phoneNum;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="accountId", referencedColumnName = "userId")
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn(name="userId", referencedColumnName = "accountId")
 	private Account account;
 	
 	
 	
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
 
 
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

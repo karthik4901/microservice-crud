@@ -1,6 +1,7 @@
 package com.app.restcontroller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,23 +21,27 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@GetMapping("/getUser/{Id}")
-	public ResponseEntity<User> getUserById(@PathVariable int userId){
-		return null;		
+	@GetMapping("/getUser/{id}")
+	public ResponseEntity<User> getUserById(@PathVariable Integer id){
+		
+		Optional<User> userById = userRepository.findById(id);
+		User user = userById.get();
+		return new ResponseEntity<User>(user,HttpStatus.OK);		
 	}
 	
 	@PostMapping(path="/saveuser")
-	public ResponseEntity<String> createUser(@RequestBody User user){
+	public ResponseEntity<Object> createUser(@RequestBody User user){
 		
+		User usderFromDb = null;
 		try {
-			userRepository.save(user);
+			 usderFromDb = userRepository.save(user);
 		}catch(Exception e) {
-			return new ResponseEntity<String>("failed to create",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<String>("user created success fully",HttpStatus.OK);
+		return new ResponseEntity<>("user created success fully with "+usderFromDb.getUserId(),HttpStatus.OK);
 	}
 	
-	@GetMapping
+	@GetMapping("/fetchAll")
 	public ResponseEntity<List> getAllUser(){
 		return null;
 		

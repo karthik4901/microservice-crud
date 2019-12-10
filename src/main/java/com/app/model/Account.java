@@ -1,7 +1,9 @@
 package com.app.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,13 +15,13 @@ import javax.persistence.Table;
 public class Account {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer accountId;
 	
 	@Column
 	private Integer balance;
 	
-	@OneToOne(mappedBy = "account")
+	@OneToOne(mappedBy = "account",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private User user;
 
 	public int getAccountId() {
