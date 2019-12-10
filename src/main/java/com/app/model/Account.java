@@ -1,27 +1,35 @@
 package com.app.model;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -383083567088901534L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer accountId;
+	Integer accountId;
 	
 	@Column
 	private Integer balance;
 	
-	@OneToOne(mappedBy = "account",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id", nullable = false, updatable = false, insertable = true)
 	private User user;
 
 	public int getAccountId() {
@@ -38,6 +46,11 @@ public class Account {
 
 	public void setBalance(Integer balance) {
 		this.balance = balance;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [accountId=" + accountId + ", balance=" + balance + ", user=" + user + "]";
 	}
 	
 	

@@ -38,11 +38,11 @@ public class UserController {
 		}catch(Exception e) {
 			return new ResponseEntity<>(e,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("user created success fully with "+usderFromDb.getUserId(),HttpStatus.OK);
+		return new ResponseEntity<>("user created success fully with "+usderFromDb.getId(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/fetchAll")
-	public ResponseEntity<List> getAllUser(){
+	public ResponseEntity<List<User>> getAllUser(){
 		return null;
 		
 	}

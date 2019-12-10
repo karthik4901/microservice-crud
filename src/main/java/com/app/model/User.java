@@ -1,20 +1,29 @@
 package com.app.model;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class User {
+public class User implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -698406735126803591L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userId;
+	@Column(name="user_id")
+	Integer id;
 	
 	private String firstName;
 	
@@ -22,105 +31,78 @@ public class User {
 	
 	private String email;
 	
-	private Integer phoneNum;
+	private String phoneNum;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinColumn(name="userId", referencedColumnName = "accountId")
-	private Account account;
+	private String address;
 	
-	
-	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	private List<Account> account;
 
-	public Integer getUserId() {
-		return userId;
+	
+	public Integer getId() {
+		return id;
 	}
 
-
-
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-
-
-
 
 	public String getFirstName() {
 		return firstName;
 	}
 
-
-
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
-
-
 
 	public String getLastName() {
 		return lastName;
 	}
 
-
-
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
-
-
-	public Integer getPhoneNum() {
+	public String getPhoneNum() {
 		return phoneNum;
 	}
 
-
-
-
-	public void setPhoneNum(Integer phoneNum) {
+	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 
+	public String getAddress() {
+		return address;
+	}
 
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-
-	public Account getAccount() {
+	public List<Account> getAccount() {
 		return account;
 	}
 
-
-
-
-	public void setAccount(Account account) {
+	public void setAccount(List<Account> account) {
 		this.account = account;
 	}
 
-
-
-
 	@Override
 	public String toString() {
-		return "User [account=" + account + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", phoneNum=" + phoneNum + ", userId=" + userId + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phoneNum=" + phoneNum + ", address=" + address + ", account=" + account + "]";
 	}
 	
+	
+
  
 	
 
